@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework_api_key",
+    "Auth",
 ]
 
 MIDDLEWARE = [
@@ -47,12 +48,27 @@ MIDDLEWARE = [
 API_KEY_CUSTOM_HEADER = "HTTP_X_API_KEY"
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework_api_key.permissions.HasAPIKey",
-    ]
+        # "rest_framework_api_key.permissions.HasAPIKey",
+    ],
 }
 
-CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000"]
+CORS_ALLOWED_ORIGINS = ["http://127.0.0.1:3000", "http://localhost:3000"]
+CORS_ALLOWED_METHODS = ["DELETE", "GET", "OPTIONS", "PATCH", "POST", "PUT"]
+CORS_ALLOWED_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
 
 ROOT_URLCONF = "App.urls"
 
@@ -126,3 +142,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "Auth.User"
