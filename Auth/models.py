@@ -13,6 +13,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(_("email address"), unique=True)
     username = models.CharField(_("username"), max_length=128)
     profile_image = models.CharField(_("profile image"), max_length=128)
+    is_active = models.BooleanField(_("is active"), default=True)
 
     USERNAME_FIELD: str = "email"
     REQUIRED_FIELDS: List[str] = ["username"]

@@ -1,6 +1,7 @@
 from os import getenv
 from pathlib import Path
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -69,6 +70,15 @@ CORS_ALLOWED_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "JWK_URL": None,
+    "LEEWAY": 0,
+}
 
 ROOT_URLCONF = "App.urls"
 

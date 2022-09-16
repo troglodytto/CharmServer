@@ -1,7 +1,8 @@
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_200_OK, HTTP_205_RESET_CONTENT
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.conf import settings
 
 # from django.db import Do
 from Auth.models import User
@@ -19,18 +20,20 @@ class LoginAPI(generics.GenericAPIView):
         user = User.find_or_create(serializer=serializer)
         token = RefreshToken.for_user(user)
 
-        return Response(
+        response = Response(
             {
                 "is_active": user.is_active,
-                "access_token": str(token.access_token),
-                "refresh_token": str(token),
-                "expires_in": 900,
                 "profile_image": validated_data["picture"],
                 "email": user.email,
                 "user_name": validated_data["name"],
+                "access_token": str(token.access_token),
+                "refresh_token": str(token),
+                "max_age": settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"],
             },
             HTTP_200_OK,
         )
+
+        return response
 
 
 class ProfileAPI(generics.RetrieveAPIView):
@@ -38,5 +41,17 @@ class ProfileAPI(generics.RetrieveAPIView):
 
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
+    def get_object(self):
         return self.request.user
+
+
+class LogoutAPI(generics.RetrieveAPIView):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        response = Response({"message": "Logout successful"}, HTTP_205_RESET_CONTENT)
+
+        # @todo - Add Token Blacklist
+
+        return response
