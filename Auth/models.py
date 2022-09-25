@@ -21,7 +21,7 @@ class User(AbstractBaseUser):
     objects: BaseUserManager = UserManager()
 
     def __str__(self) -> str:
-        return f"${self.username} [{self.email}]"
+        return f"${self.username} [{self.email} {'✅' if self.is_active else '❌'}]"
 
     @staticmethod
     def find_or_create(serializer):

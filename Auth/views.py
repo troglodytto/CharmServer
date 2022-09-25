@@ -20,6 +20,8 @@ class LoginAPI(generics.GenericAPIView):
         user = User.find_or_create(serializer=serializer)
         token = RefreshToken.for_user(user)
 
+        print(user)
+
         response = Response(
             {
                 "is_active": user.is_active,
