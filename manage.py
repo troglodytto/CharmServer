@@ -2,12 +2,13 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+
 import firebase_admin
 from firebase_admin import credentials
 
 
 def initialize_firebase():
-    cred = credentials.Certificate("./charm-social-firebase.json")
+    cred = credentials.Certificate("config/charm-social-firebase.json")
     firebase_admin.initialize_app(cred)
 
 

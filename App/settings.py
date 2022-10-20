@@ -1,9 +1,11 @@
-from os import getenv
-from pathlib import Path
-from dotenv import load_dotenv
 from datetime import timedelta
+from pathlib import Path
 
-load_dotenv()
+from dotenv import dotenv_values
+
+DEBUG = True
+
+ENV = dotenv_values("config/.env.development" if DEBUG else "config/.env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,9 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv("SECRET_KEY")
+SECRET_KEY = ENV.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_api_key",
     "Auth",
+    "User",
 ]
 
 MIDDLEWARE = [
@@ -72,10 +74,10 @@ CORS_ALLOWED_HEADERS = [
 ]
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "AUDIENCE": None,
-    "ISSUER": None,
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "AUDIENCE": "https://charm.io",
+    "ISSUER": "https://charm.io",
     "JWK_URL": None,
     "LEEWAY": 0,
 }
@@ -153,4 +155,4 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "Auth.User"
+AUTH_USER_MODEL = "User.User"

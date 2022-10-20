@@ -132,7 +132,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+config/
 .venv
 env/
 venv/
@@ -145,6 +145,7 @@ venv.bak/
 .spyderproject
 .spyproject
 .vscode
+.idea
 
 # Rope project settings
 .ropeproject

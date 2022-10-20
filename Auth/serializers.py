@@ -1,6 +1,6 @@
-from rest_framework import serializers
 from firebase_admin import auth
-from Auth.models import User
+from rest_framework import serializers
+from User.models import User
 
 
 class LoginSerializer(serializers.Serializer):
@@ -23,9 +23,3 @@ class LoginSerializer(serializers.Serializer):
         )
 
         return user
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        exclude = ("password", "last_login")

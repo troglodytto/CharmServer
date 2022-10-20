@@ -11,10 +11,14 @@ djangorestframework-simplejwt = "*"
 psycopg = "*"
 python-dotenv = "*"
 firebase-admin = "*"
-djangorestframework-api-key = "2.*"
+djangorestframework-api-key = "2"
+requests = "*"
 
 [dev-packages]
 black = "*"
+isort = "*"
+pylint = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.10"
